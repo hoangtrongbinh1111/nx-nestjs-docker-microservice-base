@@ -8,6 +8,7 @@
     "docker:client-app": "pnpm nx run client-app:serve --host=0.0.0.0",
     "docker:api-customer-service": "pnpm nx run api-customer-service:serve --host=0.0.0.0",
     "docker:api-gateway": "pnpm nx run api-gateway:serve --host=0.0.0.0",
+    "docker:api-users": "pnpm nx run api-users:serve --host=0.0.0.0",
     "docker:client:qa:up": "cross-env NX_APP_ENV=qa docker compose -f ./docker-compose.client-app.yaml up",
     "docker:client:dev:up": "cross-env NX_APP_ENV=dev docker compose -f ./docker-compose.client-app.yaml up",
     "docker:workspace:host:up": "cross-env NX_APP_ENV=host docker compose -f ./docker-compose.workspace.yaml up",

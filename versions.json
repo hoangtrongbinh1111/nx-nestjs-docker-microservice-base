@@ -1,5 +1,6 @@
 {
     "client-app": "2023.01.09.1",
     "api-customer-service": "2023.01.11.1",
-    "api-gateway": "2023.01.11.1"
+    "api-gateway": "2023.01.11.1",
+    "api-users": "2023.01.11.1"
 }

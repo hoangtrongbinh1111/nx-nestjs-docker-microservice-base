@@ -16,6 +16,7 @@ services:
       - client-app
       - api-customer-service
       - api-gateway
+      - api-users
   # Postgres
   postgres:
     container_name: postgres
@@ -73,6 +74,23 @@ services:
     restart: on-failure
     volumes:
       - ./apps/api-gateway/:/usr/src/root/apps/api-gateway
+    networks:
+      - gateway
+      - database_pg
+    depends_on:
+      - postgres
+  api-users:
+    container_name: api-users
+    ports:
+      - '3335:3335'
+    build:
+      dockerfile: ./apps/api-users/Dockerfile.dev
+    extends:
+      file: docker-compose.base.yaml
+      service: nx-base
+    restart: on-failure
+    volumes:
+      - ./apps/api-users/:/usr/src/root/apps/api-users
     networks:
       - gateway
       - database_pg
