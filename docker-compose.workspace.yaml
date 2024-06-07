@@ -1,0 +1,101 @@
+version: "3"
+
+# @INFO: Other API Services should be written here
+services:
+  # Nginx
+  nginx:
+    container_name: nginx-workspace
+    build:
+      dockerfile: ./config/nginx/Dockerfile.dev
+    ports:
+      - '10443:10443'
+    restart: on-failure
+    networks:
+      - gateway
+    depends_on:
+      - client-app
+      - api-customer-service
+      - api-gateway
+  # Postgres
+  postgres:
+    container_name: postgres
+    image: postgres:latest
+    ports:
+      - '5432:5432'
+    volumes:
+      - /tmp/data/postgres:/data/postgres
+    env_file:
+      - ./config/env/.env.host
+    networks:
+      - gateway
+      - database_pg
+  # PgAdmin
+  pgadmin:
+    container_name: pgadmin
+    image: dpage/pgadmin4
+    ports:
+      - '8080:80'
+    volumes:
+      - /tmp/data/pgadmin:/root/.pgadmin
+    env_file:
+      - ./config/env/.env.host
+    networks:
+      - gateway
+      - database_pg
+    depends_on:
+      - postgres
+  api-customer-service:
+    container_name: api-customer-service
+    ports:
+      - '3333:3333'
+    build:
+      dockerfile: ./apps/api-customer-service/Dockerfile.dev
+    extends:
+      file: docker-compose.base.yaml
+      service: nx-base
+    restart: on-failure
+    volumes:
+      - ./apps/api-customer-service/:/usr/src/root/apps/api-customer-service
+    networks:
+      - gateway
+      - database_pg
+    depends_on:
+      - postgres
+  api-gateway:
+    container_name: api-gateway
+    ports:
+      - '3334:3334'
+    build:
+      dockerfile: ./apps/api-gateway/Dockerfile.dev
+    extends:
+      file: docker-compose.base.yaml
+      service: nx-base
+    restart: on-failure
+    volumes:
+      - ./apps/api-gateway/:/usr/src/root/apps/api-gateway
+    networks:
+      - gateway
+      - database_pg
+    depends_on:
+      - postgres
+  # Client-App: React App
+  client-app:
+    container_name: client-app
+    ports:
+      - '4200:4200'
+    build:
+      dockerfile: ./apps/client-app/Dockerfile.dev
+    extends:
+      file: docker-compose.base.yaml
+      service: nx-base
+    restart: on-failure
+    volumes:
+      - ./apps/client-app/:/usr/src/root/apps/client-app
+    networks:
+      - gateway
+    depends_on:
+      - api-customer-service
+networks:
+  gateway: {}
+  database_pg: {}
+
