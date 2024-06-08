@@ -14,7 +14,11 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@highhammer/common": ["libs/common/src/index.ts"],
+      "@highhammer/microservices": ["libs/microservices/src/index.ts"],
+      "@highhammer/persistence": ["libs/persistence/src/index.ts"]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }

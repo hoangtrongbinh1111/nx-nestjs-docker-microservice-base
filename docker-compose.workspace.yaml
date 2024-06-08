@@ -13,10 +13,8 @@ services:
     networks:
       - gateway
     depends_on:
-      - client-app
       - api-customer-service
       - api-gateway
-      - api-users
   # Postgres
   postgres:
     container_name: postgres
@@ -79,40 +77,6 @@ services:
       - database_pg
     depends_on:
       - postgres
-  api-users:
-    container_name: api-users
-    ports:
-      - '3335:3335'
-    build:
-      dockerfile: ./apps/api-users/Dockerfile.dev
-    extends:
-      file: docker-compose.base.yaml
-      service: nx-base
-    restart: on-failure
-    volumes:
-      - ./apps/api-users/:/usr/src/root/apps/api-users
-    networks:
-      - gateway
-      - database_pg
-    depends_on:
-      - postgres
-  # Client-App: React App
-  client-app:
-    container_name: client-app
-    ports:
-      - '4200:4200'
-    build:
-      dockerfile: ./apps/client-app/Dockerfile.dev
-    extends:
-      file: docker-compose.base.yaml
-      service: nx-base
-    restart: on-failure
-    volumes:
-      - ./apps/client-app/:/usr/src/root/apps/client-app
-    networks:
-      - gateway
-    depends_on:
-      - api-customer-service
 networks:
   gateway: {}
   database_pg: {}

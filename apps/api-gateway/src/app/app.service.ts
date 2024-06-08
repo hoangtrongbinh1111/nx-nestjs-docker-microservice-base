@@ -3,6 +3,8 @@ import { Injectable } from '@nestjs/common';
 @Injectable()
 export class AppService {
   getData(): { message: string } {
-    return { message: 'Hello API Gateway' };
+    return {
+      message: 'Welcome to api-customer-service of Highhammer!'
+    };
   }
 }

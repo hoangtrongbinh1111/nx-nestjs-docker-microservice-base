@@ -3,49 +3,26 @@
  * This is only a minimal backend to get started.
  */
 
-import { Logger, ValidationPipe } from '@nestjs/common';
+import { Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
-import { ConfigService } from '@nestjs/config';
-import { IApplicationConfig } from '@app/common';
-import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import { AppModule } from './app/app.module';
 
-export const VERSION = process.env.npm_package_version || '1.0';
-export const NAME = process.env.npm_package_name || 'api-bootstrap';
+import { AppModule } from './app/app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  const config = app.get(ConfigService<IApplicationConfig>);
-  const globalPrefix = config.get<string>('prefix');
-  const port = config.get<number>('port');
+  const globalPrefix = 'api';
   app.setGlobalPrefix(globalPrefix);
-  app.enableCors();
-
-  const swaggerConfig = new DocumentBuilder()
-    .setTitle(`${NAME.toLocaleUpperCase()} Documentation`)
-    .setDescription('')
-    .setVersion(VERSION)
-    .addBearerAuth()
-    .build();
-  const document = SwaggerModule.createDocument(app, swaggerConfig);
-  SwaggerModule.setup(`${globalPrefix}/docs`, app, document);
-
-  app.useGlobalPipes(
-    new ValidationPipe({
-      validationError: {
-        target: true,
-        value: true,
-      },
-      disableErrorMessages: false,
-      transform: true,
-      transformOptions: { enableImplicitConversion: true },
-    })
-  );
-
+  const port = process.env.PORT || 3334;
   await app.listen(port);
   Logger.log(
     `🚀 Application is running on: http://localhost:${port}/${globalPrefix}`
   );
+  Logger.log({
+    NX_POSTGRES_HOST: process.env.NX_POSTGRES_HOST,
+    NX_POSTGRES_PORT: process.env.NX_POSTGRES_PORT,
+    NX_POSTGRES_USER: process.env.NX_POSTGRES_USER,
+    NX_POSTGRES_DB: process.env.NX_POSTGRES_DB
+  })
 }
 
 bootstrap();

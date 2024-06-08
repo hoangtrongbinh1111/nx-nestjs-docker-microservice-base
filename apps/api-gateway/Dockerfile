@@ -5,7 +5,7 @@ ENV NODE_ENV production
 
 WORKDIR "/app"
 COPY --chown=node:node ./dist/ .
-EXPOSE 3334
+EXPOSE 3333
 
 USER node
 
