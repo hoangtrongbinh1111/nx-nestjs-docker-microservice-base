@@ -1,0 +1,62 @@
+{
+  "name": "api-user",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/api-user/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nx/webpack:webpack",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/apps/api-user",
+        "main": "apps/api-user/src/main.ts",
+        "tsConfig": "apps/api-user/tsconfig.app.json",
+        "assets": ["apps/api-user/src/assets"],
+        "generatePackageJson": false,
+        "target": "node",
+        "compiler": "tsc"
+      },
+      "configurations": {
+        "production": {
+          "optimization": true,
+          "extractLicenses": true,
+          "inspect": false,
+          "fileReplacements": [
+            {
+              "replace": "apps/api-user/src/environments/environment.ts",
+              "with": "apps/api-user/src/environments/environment.prod.ts"
+            }
+          ]
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nx/node:node",
+      "options": {
+        "buildTarget": "api-user:build"
+      },
+      "configurations": {
+        "production": {
+          "buildTarget": "api-user:build:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/api-user/**/*.ts"],
+        "ignorePath": "apps/api-user/.eslintignore"
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/apps/api-user"],
+      "options": {
+        "jestConfig": "apps/api-user/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}

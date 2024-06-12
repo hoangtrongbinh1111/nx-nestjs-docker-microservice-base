@@ -9,6 +9,7 @@ COPY ./package.json ./pnpm-lock.yaml ./pnpm-workspace.yaml ./.npmrc ./
 # Look into the workspace.json file get all the projectNames and copy with a script automatically
 COPY ./apps/api-customer-service/package.json ./apps/api-customer-service/
 COPY ./apps/api-gateway/package.json ./apps/api-gateway/
+COPY ./apps/api-user/package.json ./apps/api-user/
 COPY ./apps/api-worker/package.json ./apps/api-worker/
 RUN pnpm config set store-dir ./.pnpm-store
 RUN pnpm install

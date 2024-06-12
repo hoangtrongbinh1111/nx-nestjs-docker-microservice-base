@@ -7,6 +7,7 @@
     "preinstall": "npx only-allow pnpm",
     "docker:api-customer-service": "pnpm nx run api-customer-service:serve --host=0.0.0.0",
     "docker:api-gateway": "pnpm nx run api-gateway:serve --host=0.0.0.0",
+    "docker:api-user": "pnpm nx run api-user:serve --host=0.0.0.0",
     "docker:workspace:host:up": "cross-env NX_APP_ENV=host docker compose -f ./docker-compose.workspace.yaml up",
     "docker:workspace:qa:up": "cross-env NX_APP_ENV=qa docker compose -f ./docker-compose.workspace.yaml up",
     "docker:workspace:dev:up": "cross-env NX_APP_ENV=dev docker compose -f ./docker-compose.workspace.yaml up",
