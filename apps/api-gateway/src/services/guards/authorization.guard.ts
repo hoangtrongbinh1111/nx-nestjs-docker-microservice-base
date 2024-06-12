@@ -28,7 +28,7 @@ export class AuthGuard implements CanActivate {
     }
 
     const request = context.switchToHttp().getRequest();
-    const userTokenInfo = await firstValueFrom(
+    const userTokenInfo: any = await firstValueFrom(
       this.tokenServiceClient.send('token_decode', {
         token: request.headers.authorization,
       }),
@@ -45,7 +45,7 @@ export class AuthGuard implements CanActivate {
       );
     }
 
-    const userInfo = await firstValueFrom(
+    const userInfo: any = await firstValueFrom(
       this.userServiceClient.send('user_get_by_id', userTokenInfo.data.userId),
     );
 

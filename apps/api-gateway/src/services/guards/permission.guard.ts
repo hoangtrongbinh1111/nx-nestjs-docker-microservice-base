@@ -30,7 +30,7 @@ export class PermissionGuard implements CanActivate {
 
     const request = context.switchToHttp().getRequest();
 
-    const permissionInfo = await firstValueFrom(
+    const permissionInfo : any = await firstValueFrom(
       this.permissionServiceClient.send('permission_check', {
         permission,
         user: request.user,
