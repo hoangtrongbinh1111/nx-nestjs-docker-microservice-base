@@ -15,8 +15,10 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@highhammer/authen": ["libs/authen/src/index.ts"],
       "@highhammer/common": ["libs/common/src/index.ts"],
       "@highhammer/microservices": ["libs/microservices/src/index.ts"],
+      "@highhammer/my-nest-lib": ["libs/my-nest-lib/src/index.ts"],
       "@highhammer/persistence": ["libs/persistence/src/index.ts"]
     }
   },

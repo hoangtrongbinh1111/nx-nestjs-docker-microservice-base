@@ -1,4 +1,4 @@
-import { Controller, HttpStatus, Inject } from '@nestjs/common';
+import { Controller, HttpStatus, Inject, Get  } from '@nestjs/common';
 import { MessagePattern, ClientProxy } from '@nestjs/microservices';
 
 import { UserService } from './services/user.service';
@@ -195,5 +195,11 @@ export class UserController {
     }
 
     return result;
+  }
+
+  @Get()
+  @MessagePattern('ping_user')
+  public healthCheck(): string {
+    return 'Service User is OK!';
   }
 }
