@@ -20,10 +20,10 @@ const getOCINodePortUrl = async () => {
 const run = async () => {
   await addZotRepo();
   await installZot().then(() => {
-    console.log(`[Highhammer] Installed Zot OCI successfully. If you want to uninstall zot run => helm uninstall zot`);
+    console.log(`[GSV] Installed Zot OCI successfully. If you want to uninstall zot run => helm uninstall zot`);
   });
   await getOCINodePortUrl().then((url) => {
-    console.log(`[Highhammer] Zot OCI running on NodePort ${url}. Authentication is disabled for dev purposes.`.replace(/\n/, ''));
+    console.log(`[GSV] Zot OCI running on NodePort ${url}. Authentication is disabled for dev purposes.`.replace(/\n/, ''));
   });
 }
 

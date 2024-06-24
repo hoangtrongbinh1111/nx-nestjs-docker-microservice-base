@@ -4,7 +4,7 @@ import { ClientProxyFactory } from '@nestjs/microservices';
 import { UserController } from './user.controller';
 import { UserService } from './services/user.service';
 import { ConfigService } from './services/config/config.service';
-import { AuthenInterceptor, AuthenModule } from '@highhammer/authen';
+import { AuthenInterceptor, AuthenModule } from '@gsv/authen';
 
 @Module({
   imports: [

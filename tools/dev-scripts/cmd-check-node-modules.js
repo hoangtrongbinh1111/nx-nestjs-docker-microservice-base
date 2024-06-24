@@ -22,11 +22,11 @@ const isNodeModuleDirEmpty = () => {
 const run = () => {
   isNodeModuleDirEmpty()
     .then(() => {
-      console.log('[Highhammer] node_modules check successful.')
+      console.log('[GSV] node_modules check successful.')
       process.exit(0);
     })
     .catch(() => {
-      console.error('[Highhammer] Please run <npm run setup> to install node modules.')
+      console.error('[GSV] Please run <npm run setup> to install node modules.')
       process.exit(1);
     })
 }

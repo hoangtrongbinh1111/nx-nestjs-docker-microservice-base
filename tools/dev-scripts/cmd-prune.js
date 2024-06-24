@@ -3,8 +3,8 @@ const execPromise = util.promisify(require('node:child_process').exec);
 
 const pruneContainers = () => {
   return execPromise('docker container prune -f').catch((e) => {
-    console.error('[Highhammer] An error occurred while pruning docker containers.', e);
-  }).finally(() => console.log('[Highhammer] Container prune completed.'));
+    console.error('[GSV] An error occurred while pruning docker containers.', e);
+  }).finally(() => console.log('[GSV] Container prune completed.'));
 };
 
 const pruneImages = () => {
@@ -22,7 +22,7 @@ const pruneImages = () => {
       if (imageId?.length) {
         imageIdExecs.push(
           execPromise(`docker image rm ${imageId} -f`)
-            .then(() => console.log(`[Highhammer] Docker image with id:${imageId} removed.`))
+            .then(() => console.log(`[GSV] Docker image with id:${imageId} removed.`))
             .catch()
         );
       }
@@ -30,7 +30,7 @@ const pruneImages = () => {
     return Promise.all(imageIdExecs);
   }).catch(() => {
     return 'error'
-  }).finally(() => console.log('[Highhammer] Image removal completed.'))
+  }).finally(() => console.log('[GSV] Image removal completed.'))
 };
 
 const stopDockerCompose = () => {
@@ -41,7 +41,7 @@ const stopDockerCompose = () => {
       }
     })
     .catch((e) => {
-      console.error('[Highhammer] An error occurred while executing docker compose down.', e);
+      console.error('[GSV] An error occurred while executing docker compose down.', e);
     });
 };
 
@@ -51,12 +51,12 @@ const prune = () => {
 }
 
 const handleSuccess = () => {
-  console.error('[Highhammer] Docker prune operation completed.');
+  console.error('[GSV] Docker prune operation completed.');
   process.exit(0);
 };
 
 const handleError = (error) => {
-  console.error('[Highhammer] An error occurred while pruning docker assets.', error);
+  console.error('[GSV] An error occurred while pruning docker assets.', error);
   process.exit(1);
 }
 

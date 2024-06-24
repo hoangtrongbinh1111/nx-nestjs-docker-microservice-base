@@ -14,7 +14,7 @@ const listRunningContainers = async () => {
       }
     })
     .catch((e) => {
-      console.error('[Highhammer] An error occurred while listing running containers.', e);
+      console.error('[GSV] An error occurred while listing running containers.', e);
       process.exit(1);
     });
 };
@@ -28,17 +28,17 @@ const isDockerLocalRegistryRunning = async () => {
 const startDockerLocalRegistry = async () => {
   const isRegistryRunning = await isDockerLocalRegistryRunning();
   const logSuccess = () => {
-    console.log(`[Highhammer] Docker registry running on port ${DOCKER_REGISTRY_PORT}.`);
-    const logMessageForTail = '[Highhammer] To tail the container logs you can run:\n => docker logs -f registry';
+    console.log(`[GSV] Docker registry running on port ${DOCKER_REGISTRY_PORT}.`);
+    const logMessageForTail = '[GSV] To tail the container logs you can run:\n => docker logs -f registry';
     console.log(logMessageForTail);
-    const logMessageForTermination = `[Highhammer] To stop the registry you can run:\n => docker container stop ${DOCKER_REGISTRY_NAME} && docker container rm -v ${DOCKER_REGISTRY_NAME}`;
+    const logMessageForTermination = `[GSV] To stop the registry you can run:\n => docker container stop ${DOCKER_REGISTRY_NAME} && docker container rm -v ${DOCKER_REGISTRY_NAME}`;
     console.log(logMessageForTermination);
   }
   if (isRegistryRunning) {
     logSuccess();
     return;
   }
-  console.log(`[Highhammer] Creating local docker registry with name-> ${DOCKER_REGISTRY_NAME} on port ${DOCKER_REGISTRY_PORT}`);
+  console.log(`[GSV] Creating local docker registry with name-> ${DOCKER_REGISTRY_NAME} on port ${DOCKER_REGISTRY_PORT}`);
   const removeExistingRegistry = execPromise(`docker container rm -f ${DOCKER_REGISTRY_NAME}`).then((response) => {
     if (response?.stderr?.length && !response.stderr.includes('No such container')) {
       console.log(response?.stderr);
@@ -57,7 +57,7 @@ const startDockerLocalRegistry = async () => {
         }
       })
       .catch((e) => {
-        console.error('[Highhammer] An error occurred while creating a local registry.', e);
+        console.error('[GSV] An error occurred while creating a local registry.', e);
         process.exit(1);
       });
   })
@@ -78,11 +78,11 @@ const runJob = async (
 const run = async () => {
   try {
     await runJob(
-      '[Highhammer] Job->startDockerLocalRegistry()',
+      '[GSV] Job->startDockerLocalRegistry()',
       startDockerLocalRegistry
     );
     await runJob(
-      '[Highhammer] Job->startOCIRepository',
+      '[GSV] Job->startOCIRepository',
       startOCIRepository
     );
     process.exit(0);

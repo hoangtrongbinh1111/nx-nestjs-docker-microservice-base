@@ -29,7 +29,7 @@ const getLatestTagVersion = async () => {
       }
     })
     .catch((e) => {
-      console.error('[Highhammer] An error occurred while getting the latest tag version. Returning the tag version as 0.0.0', e);
+      console.error('[GSV] An error occurred while getting the latest tag version. Returning the tag version as 0.0.0', e);
       return '0.0.0';
     });
 };
@@ -62,11 +62,11 @@ const tagAndPushProjectDockerImages = async () => {
       if (response?.stderr?.length) {
         console.log(response?.stderr);
       } else {
-        console.log(`[Highhammer] Project images are tagged and pushed successfully.`);
+        console.log(`[GSV] Project images are tagged and pushed successfully.`);
       }
     })
     .catch((e) => {
-      console.error('[Highhammer] An error occurred while tagging and pushing project images.', e);
+      console.error('[GSV] An error occurred while tagging and pushing project images.', e);
       process.exit(1);
     });
 };
@@ -77,7 +77,7 @@ const buildProjects = async () => {
       if (response?.stderr?.length) {
         console.log(response?.stderr);
       } else {
-        console.log(`[Highhammer] All projects are build successfully.`);
+        console.log(`[GSV] All projects are build successfully.`);
         const projects = getProjectVersionsJson();
         // @INFO: Copy all the dist folder into the project's own folder
         const promiseBatch = Object.keys(projects)
@@ -92,7 +92,7 @@ const buildProjects = async () => {
       }
     })
     .catch((e) => {
-      console.error('[Highhammer] An error occurred while building the projects.', e);
+      console.error('[GSV] An error occurred while building the projects.', e);
       process.exit(1);
     });
 };
@@ -107,7 +107,7 @@ const tagAndPushProjectHelmChart = async (chartName, chartPath, version) => {
     .then(() => runCmd(`helm show all "oci://${OCI_REPOSITORY_URL}/helm/${chartName}" --version ${version}`)).then((response) => console.log(response.stdout))
     .then(() => runCmd(`rm -f ./${zippedFile}`))
     .catch((e) => {
-      console.error(`[Highhammer] An error occurred while packaging the chart ${chartName}`, e);
+      console.error(`[GSV] An error occurred while packaging the chart ${chartName}`, e);
       process.exit(1);
     });
   }
@@ -116,7 +116,7 @@ const tagAndPushProjectHelmChart = async (chartName, chartPath, version) => {
 
 const tagAndPushProjectHelmCharts = async () => {
   if (!OCI_REPOSITORY_URL) {
-    return Promise.reject('[Highhammer][Error] Please pass the OCI repository url as an argument.')
+    return Promise.reject('[GSV][Error] Please pass the OCI repository url as an argument.')
   }
   const projects = getProjectVersionsJson();
   const latestTagVersion = await getLatestTagVersion();
@@ -166,15 +166,15 @@ const runJob = async (
 const run = async () => {
   try {
     await runJob(
-      '[Highhammer] Job->buildProjects()',
+      '[GSV] Job->buildProjects()',
       buildProjects
     );
     await runJob(
-      '[Highhammer] Job->tagAndPushProjectDockerImages()',
+      '[GSV] Job->tagAndPushProjectDockerImages()',
       tagAndPushProjectDockerImages
     );
     await runJob(
-      '[Highhammer] Job->tagAndPushProjectHelmCharts()',
+      '[GSV] Job->tagAndPushProjectHelmCharts()',
       tagAndPushProjectHelmCharts
     );
     process.exit(0);

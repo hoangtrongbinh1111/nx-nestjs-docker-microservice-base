@@ -15,11 +15,11 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@highhammer/authen": ["libs/authen/src/index.ts"],
-      "@highhammer/common": ["libs/common/src/index.ts"],
-      "@highhammer/microservices": ["libs/microservices/src/index.ts"],
-      "@highhammer/my-nest-lib": ["libs/my-nest-lib/src/index.ts"],
-      "@highhammer/persistence": ["libs/persistence/src/index.ts"]
+      "@gsv/authen": ["libs/authen/src/index.ts"],
+      "@gsv/common": ["libs/common/src/index.ts"],
+      "@gsv/microservices": ["libs/microservices/src/index.ts"],
+      "@gsv/my-nest-lib": ["libs/my-nest-lib/src/index.ts"],
+      "@gsv/persistence": ["libs/persistence/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
